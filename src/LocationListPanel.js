@@ -2,9 +2,16 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { useState } from "react";
 import { FILTERS } from "./FilterPanel";
 import { DoneAll, Check } from "@material-ui/icons";
+import ReviewsPanel from "./ReviewsPanel";
 
-const LocationCard = ({ name, assist_type }) => {
-  const { accessibleWith, partiallyAccessibleWith } = assist_type;
+const LocationCard = ({ name, assist_type, onClick }) => {
+  let { accessibleWith, partiallyAccessibleWith } = assist_type;
+  if (accessibleWith === undefined) {
+    accessibleWith = {};
+  }
+  if (partiallyAccessibleWith === undefined) {
+    partiallyAccessibleWith = {};
+  }
   const accessible_traits = {};
   for (let i = 0; i < FILTERS.length; i++) {
     let filter = FILTERS[i];
@@ -36,7 +43,7 @@ const LocationCard = ({ name, assist_type }) => {
   });
 
   return (
-    <Card className="location-card">
+    <Card className="location-card" onClick={onClick}>
       <CardContent>
         <Typography variant="h5">{name}</Typography>
         <ul>{accessibleDisplay}</ul>
@@ -45,164 +52,26 @@ const LocationCard = ({ name, assist_type }) => {
   );
 };
 
-const LocationListPanel = () => {
+const LocationListPanel = ({ locations }) => {
   let [selectedLocation, setSelectedLocation] = useState(null);
-  const locations = [
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-    {
-      assist_type: {
-        accessibleWith: {
-          wheelchair: false,
-        },
-        partiallyAccessibleWith: {
-          wheelchair: true,
-        },
-      },
-      city: "",
-      description: "",
-      location: [-80.4204814, 37.2288298],
-      location_type: "place_of_worship",
-      name: "War Memorial Chapel",
-      state: "",
-    },
-  ];
-
+  console.log(locations[0]);
   const locationsDisplay = locations.map((loc) => (
     <LocationCard
       {...loc}
       key={loc.name}
-      onClick={(location) => setSelectedLocation(location)}
+      onClick={() => setSelectedLocation(loc)}
     />
   ));
 
-  return <div className="locations-list">{locationsDisplay}</div>;
+  return (
+    <div className="locations-list">
+      <ReviewsPanel
+        location={selectedLocation}
+        onClose={() => setSelectedLocation(null)}
+      />
+      {locationsDisplay}
+    </div>
+  );
 };
 
 export default LocationListPanel;

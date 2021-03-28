@@ -21,6 +21,13 @@ class SimpleMap extends Component {
   };
 
   render() {
+    const pins = this.props.locations.map((loc) => {
+      if (loc === undefined || loc.location === undefined) {
+        return null;
+      }
+      return <Marker lat={loc.location[0]} lng={loc.location[1]} />;
+    });
+    console.log(pins);
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -39,11 +46,7 @@ class SimpleMap extends Component {
           defaultZoom={this.props.zoom}
           center={{ lat: this.state.lat, lng: this.state.lng }}
         >
-          <Marker
-            lat={this.props.center.lat}
-            lng={this.props.center.lng}
-            text="Marker"
-          />
+          {pins}
         </GoogleMapReact>
       </div>
     );

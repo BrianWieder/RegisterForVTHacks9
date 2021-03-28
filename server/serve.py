@@ -62,7 +62,7 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
         ret.append(r)   
     return {"location": [lat, long], "locations": ret}
 
-@app.route('/review', methods=['GET', 'POST'])
+@app.route('/location/review', methods=['GET', 'POST'])
 def add_review():
     rd = request.get_json()
     insert = f'''insert into access (name, city, state, lat, lng, location_type, assist_type, description) values
