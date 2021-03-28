@@ -1,14 +1,14 @@
-import './App.css';
-import Header from './Header';
-import FilterPanel from './FilterPanel';
-import LocationListPanel from './LocationListPanel';
-import MapPanel from './MapPanel';
+import "./App.css";
+import Header from "./Header";
+import FilterPanel from "./FilterPanel";
+import LocationListPanel from "./LocationListPanel";
+import MapPanel from "./MapPanel";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <div class="main-panel">
+      <Header />
+      <div className="main-panel">
         <FilterPanel />
         <LocationListPanel />
         <MapPanel />
