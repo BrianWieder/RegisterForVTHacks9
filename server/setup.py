@@ -29,7 +29,7 @@ insert = '''insert into access (name, city, state, location, location_type, assi
 #session.execute(insert)
 
 
-
+#session.execute('create search index on access with options { lenient: true}')
 row = session.execute('select * from access;')
 
 for r in row:
