@@ -1,10 +1,25 @@
 .main-panel {
   display: grid;
-  grid-template-columns: 25% 25% 50%;
+  grid-template-columns: 15% 35% 50%;
 }
 
 .filter-panel {
   display: flex;
   flex-direction: column;
   padding: 10px;
+}
+
+.location-image {
+  width: 151px;
+  height: 151px;
+}
+
+.location-card {
+  display: flex;
+  margin: 10px;
+}
+
+.locations-list {
+  height: 93vh;
+  overflow-y: scroll;
 }
