@@ -1,11 +1,11 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 const Header = () => (
-    <AppBar position="static">
-        <Toolbar>
-            <Typography>Register For VTHacks 9</Typography>
-        </Toolbar>
-    </AppBar>
+  <AppBar position="static">
+    <Toolbar>
+      <Typography>Axly</Typography>
+    </Toolbar>
+  </AppBar>
 );
 
 export default Header;
