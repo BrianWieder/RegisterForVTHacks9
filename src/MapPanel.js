@@ -25,7 +25,7 @@ class SimpleMap extends Component {
       if (loc === undefined || loc.location === undefined) {
         return null;
       }
-      return <Marker lat={loc.location[0]} lng={loc.location[1]} />;
+      return <Marker lat={loc.location[1]} lng={loc.location[0]} />;
     });
     console.log(pins);
     return (
