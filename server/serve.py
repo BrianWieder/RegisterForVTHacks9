@@ -5,6 +5,7 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import os
 from flask import send_from_directory
+from collections import OrderedDict
 
 
 app = Flask(__name__)
@@ -48,7 +49,7 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
         ret.append(val)
     row = session.execute('select * from access;')
     for r in row:
-        ret.append(r)
+        ret.append(dict(r))
     return {"location": [lat, long], "locations": ret}
 
 @app.route('/review', methods=['GET', 'POST'])

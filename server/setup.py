@@ -3,6 +3,8 @@ from cassandra.auth import PlainTextAuthProvider
 from dotenv import dotenv_values
 import json
 from cassandra.query import ordered_dict_factory
+from collections import OrderedDict
+
 
 config = dotenv_values(".env")
 
@@ -43,4 +45,4 @@ insert2 = '''insert into access (name, city, state, lat, lng, location_type, ass
 row = session.execute('select * from access;')
 
 for r in row:
-    print(r)
+    print(dict(r))
