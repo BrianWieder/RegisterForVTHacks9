@@ -25,29 +25,28 @@ def favicon():
 def hello_world():
     return 'Hello, World!'
 
-#@app.route('/location/<float:lat>/<float:long>/<float:range>')
-@app.route('/location')
+@app.route('/location/<lat>/<long>/<range>')
+#@app.route('/location')
 def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
     print(lat)
     print(long)
-    r = requests.get(f"https://accessibility-cloud.freetls.fastly.net/place-infos.json?appToken={config['ACCESS_CLOUD_TOKEN']}&latitude={lat}&longitude={long}&accuracy={range}")
-    print(r)
+    r = requests.get(f"https://accessibility-cloud.freetls.fastly.net/place-infos.json?appToken={config['ACCESS_CLOUD_TOKEN']}&latitude={lat}&longitude={long}&accuracy={range}&excludeCategories=not-accessible-by-wheelchair")
     data = r.json()['features']
     ret = []
     for f in data:
-        print(f"{f['properties']['name']}: {f['geometry']['coordinates']}, category: {f['properties']['category']}")
+        print(f)
         val = {
-            "name": f['properties']['name'],
+            "name": f['properties'].get('name'),
             "city": "",
             "state": "",
             "location": f['geometry']['coordinates'],
             "location_type": f['properties']['category'],
-            "assist_type": "",#f['properties']['accessibility']['accessibleWith'],
+            "assist_type": f['properties']['accessibility'],
             "description": ""
         }
         ret.append(val)
     
-    return {"locations": data}
+    return {"location": [lat, long], "locations": ret}
 
 with app.test_request_context():
     print(url_for('get_surrounding', lat=37.226596, long=-80.423082, range=500))
