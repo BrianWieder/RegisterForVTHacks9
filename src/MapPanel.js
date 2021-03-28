@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
-const MapPanel = () => (
-    <div> 
-        Map panel2
-    </div>
+const MapPanel = ({text}) => (
+    <div>{ text } </div>
 );
 
 class SimpleMap extends Component {
     static defaultProps = {
       center: {
-        lat: 37.23,
-        lng: -80.42
+        lat: 37.226596,
+        lng: -80.423082
       },
-      zoom: 11
+      zoom: 15
     };
    
     render() {
-        console.log(process.env);
       return (
         // Important! Always set the container height explicitly
         <div style={{ height: '100vh', width: '100%' }}>
