@@ -12,7 +12,12 @@ app = Flask(__name__)
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
-
+cloud_config= {
+        'secure_connect_bundle': 'secure-connect-HooHacks-Project.zip'
+}
+auth_provider = PlainTextAuthProvider(config['CLIENT_ID'], config['CLIENT_SECRET'])
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect('accessibility_data')
 
 
 @app.route('/favicon.ico')
@@ -46,6 +51,14 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
 
 @app.route('/review', methods=['GET', 'POST'])
 def add_review():
-    return "hi"
+    rd = request.get_json()
+    insert = f'''insert into access (name, city, state, lat, lng, location_type, assist_type, description) values
+ ({rd['name']}, {rd['city']}, {rd['state']}, {rd['location'][0]}, {rd['location'][1]}, {rd['location_type']}, 
+ {rd['assist_type']}, {rd['description']} );'''
+    session.execute(insert)
+    return 'Posted!'
+
+
+    
 if __name__== '__main__':
     app.run(host='127.0.0.1', port=8080)
