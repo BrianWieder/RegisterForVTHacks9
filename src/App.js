@@ -3,6 +3,7 @@ import Header from "./Header";
 import FilterPanel from "./FilterPanel";
 import LocationListPanel from "./LocationListPanel";
 import MapPanel from "./MapPanel";
+import SearchBox from './Search';
 
 function App() {
   return (
@@ -12,9 +13,11 @@ function App() {
         <FilterPanel />
         <LocationListPanel />
         <MapPanel />
+        <SearchBox />
       </div>
     </div>
   );
 }
 
 export default App;
+
