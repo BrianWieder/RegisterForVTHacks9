@@ -46,7 +46,9 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
             "description": ""
         }
         ret.append(val)
-    
+    row = session.execute('select * from access;')
+    for r in row:
+        ret.append(r)
     return {"location": [lat, long], "locations": ret}
 
 @app.route('/review', methods=['GET', 'POST'])
