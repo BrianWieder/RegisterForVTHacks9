@@ -1,20 +1,41 @@
 import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
+import { useState } from "react";
 
-const FILTERS = [
-  { query: "wheelchair", display: "Wheelchair Accesible" },
-  { query: "ramps", display: "Ramps" },
+export const FILTERS = [
+  { query: "wheelchair", display: "Wheelchair", checked: false },
+  { query: "ramps", display: "Ramps", checked: false },
   {
     query: "deaf-accessible-crosswalks",
     display: "Deaf Accessible Crosswalks",
+    checked: false,
   },
-  { query: "braille_signs", display: "Braille Signs" },
-  { query: "elevator", display: "Elevator" },
+  { query: "braille_signs", display: "Braille Signs", checked: false },
+  { query: "elevator", display: "Elevator", checked: false },
 ];
 
-const FilterPanel = () => {
-  const checkboxes = FILTERS.map((filter) => (
+const FilterPanel = ({ onFiltersChanged }) => {
+  const [filters, setFilters] = useState(FILTERS);
+  const checkboxes = filters.map((filter) => (
     <FormControlLabel
-      control={<Checkbox onChange={() => {}} name={filter.query} />}
+      control={
+        <Checkbox
+          onChange={() => {
+            const newFilters = [...filters];
+            for (let i = 0; i < newFilters.length; i++) {
+              if (newFilters[i].query == filter.query) {
+                newFilters[i].checked = !newFilters[i].checked;
+                break;
+              }
+            }
+            setFilters(newFilters);
+            if (onFiltersChanged) {
+              onFiltersChanged(newFilters);
+            }
+          }}
+          name={filter.query}
+          checked={filter.checked}
+        />
+      }
       label={filter.display}
       key={filter.query}
     />

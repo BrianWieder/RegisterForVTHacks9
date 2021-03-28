@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import SearchBox from "./Search";
 
-const Marker = ({ text }) => <img src="/good-marker.png" />;
+const Marker = ({ text }) => (
+  <img src="/good-marker.png" className="simple-marker" />
+);
 
 class SimpleMap extends Component {
   static defaultProps = {

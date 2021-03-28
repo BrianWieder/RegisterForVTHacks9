@@ -1,108 +1,205 @@
-import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { useState } from "react";
+import { FILTERS } from "./FilterPanel";
+import { DoneAll, Check } from "@material-ui/icons";
 
-const LocationCard = ({ img, name, description }) => {
+const LocationCard = ({ name, assist_type }) => {
+  const { accessibleWith, partiallyAccessibleWith } = assist_type;
+  const accessible_traits = {};
+  for (let i = 0; i < FILTERS.length; i++) {
+    let filter = FILTERS[i];
+    if (accessibleWith[filter.query] === true) {
+      accessible_traits[filter.query] = "FULL";
+    } else if (partiallyAccessibleWith[filter.query] === true) {
+      accessible_traits[filter.query] = "PARTIAL";
+    }
+  }
+
+  const accessibleDisplay = FILTERS.map((filter) => {
+    if (
+      accessibleWith[filter.query] === null ||
+      accessibleWith[filter.query] === undefined
+    ) {
+      return null;
+    }
+    let icon = null;
+    if (accessible_traits[filter.query] === "FULL") {
+      icon = <DoneAll />;
+    } else if (accessible_traits[filter.query] === "PARTIAL") {
+      icon = <Check />;
+    }
+    return (
+      <li key={filter.query}>
+        {filter.display} {icon}
+      </li>
+    );
+  });
+
   return (
     <Card className="location-card">
-      <CardMedia image={img} className="location-image" title={name} />
-
       <CardContent>
         <Typography variant="h5">{name}</Typography>
-        <Typography variant="subtitle1">{description}</Typography>
+        <ul>{accessibleDisplay}</ul>
       </CardContent>
     </Card>
   );
 };
 
 const LocationListPanel = () => {
+  let [selectedLocation, setSelectedLocation] = useState(null);
   const locations = [
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
     {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
-    },
-    {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
-    },
-    {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
-    },
-    {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
-    },
-    {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
-    },
-    {
-      img:
-        "https://s3-media0.fl.yelpcdn.com/bphoto/b_sq8nM-Kum8yV79S_FvCw/348s.jpg",
-      name: "Cellar Restaurant",
-      description: "Accessible Friendly",
+      assist_type: {
+        accessibleWith: {
+          wheelchair: false,
+        },
+        partiallyAccessibleWith: {
+          wheelchair: true,
+        },
+      },
+      city: "",
+      description: "",
+      location: [-80.4204814, 37.2288298],
+      location_type: "place_of_worship",
+      name: "War Memorial Chapel",
+      state: "",
     },
   ];
 
   const locationsDisplay = locations.map((loc) => (
-    <LocationCard {...loc} key={loc.name} />
+    <LocationCard
+      {...loc}
+      key={loc.name}
+      onClick={(location) => setSelectedLocation(location)}
+    />
   ));
 
   return <div className="locations-list">{locationsDisplay}</div>;

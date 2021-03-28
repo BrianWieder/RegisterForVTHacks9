@@ -9,11 +9,6 @@
   padding: 10px;
 }
 
-.location-image {
-  width: 151px;
-  height: 151px;
-}
-
 .location-card {
   display: flex;
   margin: 10px;
@@ -22,4 +17,12 @@
 .locations-list {
   height: 93vh;
   overflow-y: scroll;
+}
+
+.simple-marker {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: -25px;
+  top: -50px;
 }
