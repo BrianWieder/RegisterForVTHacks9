@@ -4,7 +4,7 @@ from dotenv import dotenv_values
 import json
 from cassandra.query import ordered_dict_factory
 from collections import OrderedDict
-
+from cassandra.util import OrderedMapSerializedKey
 
 config = dotenv_values(".env")
 
@@ -42,7 +42,14 @@ insert2 = '''insert into access (name, city, state, lat, lng, location_type, ass
 
 
 #session.execute('create search index on access with options { lenient: true}')
-row = session.execute('select * from access;')
+rows = session.execute('select * from access;')
+rows = [dict(i) for i in rows]
+for r in rows:
+    for k in r.keys():
+        if type(r[k]) is OrderedMapSerializedKey:
+            r[k] = dict(r[k])
+            for kk in r[k].keys():
+                r[k][kk]= dict(r[k][kk])               
 
-for r in row:
+for r in rows:
     print(dict(r))

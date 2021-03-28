@@ -8,6 +8,7 @@ from flask import send_from_directory
 from collections import OrderedDict
 
 
+
 app = Flask(__name__)
 
 from dotenv import dotenv_values
@@ -19,6 +20,7 @@ cloud_config= {
 auth_provider = PlainTextAuthProvider(config['CLIENT_ID'], config['CLIENT_SECRET'])
 cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 session = cluster.connect('accessibility_data')
+session.row_factory = ordered_dict_factory
 
 
 @app.route('/favicon.ico')
@@ -47,9 +49,14 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
             "description": ""
         }
         ret.append(val)
-    row = session.execute('select * from access;')
-    for r in row:
-        ret.append(dict(r))
+    rows = session.execute('select * from access;')
+    rows = [dict(i) for i in rows]
+    for r in rows:
+        for k in r.keys():
+            if type(r[k]) is OrderedMapSerializedKey:
+                r[k] = dict(r[k])
+                for kk in r[k].keys():
+                    r[k][kk]= dict(r[k][kk])     
     return {"location": [lat, long], "locations": ret}
 
 @app.route('/review', methods=['GET', 'POST'])
