@@ -56,7 +56,8 @@ def get_surrounding(lat=37.226596, long=-80.423082, range=10000):
             if type(r[k]) is OrderedMapSerializedKey:
                 r[k] = dict(r[k])
                 for kk in r[k].keys():
-                    r[k][kk]= dict(r[k][kk])     
+                    r[k][kk]= dict(r[k][kk])  
+        ret.append(r)   
     return {"location": [lat, long], "locations": ret}
 
 @app.route('/review', methods=['GET', 'POST'])
